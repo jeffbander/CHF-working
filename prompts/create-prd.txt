@@ -1,0 +1,491 @@
+# PRD Generation Prompt: Heart Failure Voice Agent Web Application
+
+## Instructions
+Generate a comprehensive Product Requirements Document (PRD) for a web-based heart failure monitoring platform that manages AI-powered voice agents. The web app serves as the control center for scheduling patient calls, configuring voice agents, analyzing voice biomarkers, and displaying clinical insights.
+
+---
+
+## 1. PRODUCT OVERVIEW
+
+### Product Name
+**HeartVoice Monitor** - Clinical Voice Biomarker Platform for Heart Failure
+
+### Problem Statement
+- 20% of heart failure patients are readmitted within 30 days
+- Voice changes indicate fluid accumulation 2-3 weeks before symptoms
+- Clinicians need automated monitoring for large patient populations
+- Current solutions lack voice biomarker analysis capabilities
+
+### Solution
+Web-based platform that:
+- Manages automated patient voice calls via AI agents
+- Analyzes voice biomarkers in real-time
+- Provides clinical dashboards with predictive analytics
+- Integrates with existing EHR systems
+
+### Target Users
+1. **Primary**: Cardiologists and heart failure specialists
+2. **Secondary**: Nurses and care coordinators
+3. **Tertiary**: Healthcare administrators
+4. **End Recipients**: Heart failure patients (via phone calls)
+
+---
+
+## 2. CORE FUNCTIONALITY REQUIREMENTS
+
+### 2.1 Patient Management Module
+
+**Web Interface Requirements:**
+```
+- Patient roster with search/filter/sort
+- Bulk import via CSV upload
+- Individual patient profiles
+- Risk stratification views
+- Call scheduling interface
+```
+
+**Data Fields:**
+- **Demographics**: Name, DOB, MRN, phone numbers, language preference
+- **Clinical**: Diagnosis (ICD-10), NYHA class, ejection fraction, medications
+- **Preferences**: Call times, frequency, custom prompts
+- **Consent**: HIPAA forms, voice recording permissions
+
+### 2.2 Voice Agent Configuration
+
+**Web-Based Configuration Panel:**
+```javascript
+// Configuration Structure
+{
+  "system_prompt": {
+    "base_template": "Standard HF assessment protocol",
+    "clinical_guidelines": "ACC/AHA 2022 HF Guidelines",
+    "escalation_triggers": ["chest pain", "severe dyspnea"],
+    "voice_personality": "warm_professional"
+  },
+  "custom_prompts": {
+    "patient_specific": "Focus on weight and swelling",
+    "language": "en-US",
+    "cultural_adaptations": true
+  },
+  "voice_settings": {
+    "provider": "ElevenLabs",
+    "model": "conversational-ai-v2",
+    "voice_id": "rachel",
+    "speed": 1.0,
+    "stability": 0.75
+  }
+}
+```
+
+### 2.3 API Gateway Requirements
+
+**Inbound API Endpoint:**
+```
+POST /api/v1/assessment/initiate
+Authorization: Bearer {token}
+Content-Type: application/json
+
+Request Body:
+{
+  "patient_id": "MRN123456",
+  "phone_number": "+1-555-0123",
+  "clinical_context": {
+    "recent_hospitalization": false,
+    "current_weight": 185,
+    "baseline_weight": 180,
+    "last_bnp": 450,
+    "medications": [...]
+  },
+  "assessment_type": "daily_check",
+  "custom_prompt": "Ask about ankle swelling",
+  "callback_url": "https://clinic.example.com/webhook"
+}
+```
+
+**Outbound Webhook Response:**
+```
+POST {callback_url}
+Content-Type: application/json
+
+Response Body:
+{
+  "assessment_id": "uuid-123",
+  "timestamp": "2024-12-01T09:30:00Z",
+  "voice_analysis": {
+    "hf_risk_score": 73,
+    "confidence": 0.89,
+    "biomarkers": {
+      "jitter": 2.1,
+      "shimmer": 8.3,
+      "hnr": 18.5,
+      "speech_rate": 95
+    },
+    "clinical_alerts": ["fluid_retention_suspected"],
+    "trend": "worsening"
+  },
+  "conversation": {
+    "transcript": "...",
+    "duration_seconds": 285,
+    "symptoms_reported": {...},
+    "medication_adherence": true
+  }
+}
+```
+
+### 2.4 Clinical Dashboard
+
+**Main Dashboard Views:**
+
+1. **Overview Dashboard**
+   - Active patients count with risk distribution
+   - Today's scheduled calls and completion rate
+   - Critical alerts requiring attention
+   - 7-day readmission risk predictions
+
+2. **Patient List View**
+   ```
+   Table Columns:
+   - Patient Name | MRN | Risk Score | Last Call | Next Call | Trend | Actions
+   
+   Filters:
+   - Risk Level: [Critical | High | Medium | Low]
+   - Call Status: [Scheduled | Completed | Failed | Overdue]
+   - Care Team: [Dropdown of providers]
+   
+   Bulk Actions:
+   - Schedule calls
+   - Export data
+   - Assign to care team
+   ```
+
+3. **Individual Patient View**
+   - Voice biomarker trend charts (30/60/90 days)
+   - Call history with playback
+   - Symptom progression timeline
+   - Clinical notes integration
+   - Medication adherence tracking
+
+4. **Analytics Dashboard**
+   - Population health metrics
+   - Readmission rate trends
+   - Cost savings calculator
+   - Model performance metrics
+
+### 2.5 Voice Analysis Outputs
+
+**Display Requirements:**
+
+```
+Heart Failure Risk Score:
+├── Overall Score: 0-100 scale with color coding
+├── Confidence Level: Percentage with error bars
+├── Trajectory: Arrow indicating 7-day trend
+└── Clinical Recommendation: Auto-generated action items
+
+Voice Biomarkers Panel:
+├── Acoustic Features
+│   ├── Jitter: 0-5% (normal <1%)
+│   ├── Shimmer: 0-10% (normal <3%)
+│   └── HNR: 0-40 dB (normal >20)
+├── Temporal Features
+│   ├── Speech Rate: words/minute
+│   ├── Pause Frequency: pauses/minute
+│   └── Response Latency: seconds
+└── Comparative Analysis
+    ├── vs Patient Baseline
+    ├── vs Cohort Average
+    └── vs Previous Week
+```
+
+---
+
+## 3. TECHNICAL SPECIFICATIONS
+
+### 3.1 Web Application Architecture
+
+**Frontend:**
+- Framework: React 18+ with TypeScript
+- UI Library: Material-UI or Ant Design
+- State Management: Redux Toolkit or Zustand
+- Charts: Recharts or D3.js for biomarker visualizations
+- Real-time Updates: WebSocket for live call status
+
+**Backend:**
+- Framework: Node.js with Express or FastAPI (Python)
+- Database: PostgreSQL for clinical data
+- Cache: Redis for session management
+- Queue: Bull/RabbitMQ for call scheduling
+- File Storage: S3 for temporary audio files
+
+**Voice Agent Integration:**
+- Primary: ElevenLabs Conversational AI API
+- Fallback: Vapi.ai or Retell AI
+- Telephony: Twilio Programmable Voice
+- Transcription: Deepgram or AssemblyAI
+
+### 3.2 Web Security Requirements
+
+```yaml
+Authentication:
+  - OAuth 2.0 / SAML 2.0 for SSO
+  - Multi-factor authentication (MFA)
+  - Session timeout: 15 minutes
+  - Role-based access control (RBAC)
+
+Data Security:
+  - TLS 1.3 for all connections
+  - AES-256 encryption at rest
+  - Field-level encryption for PHI
+  - HIPAA-compliant audit logs
+
+Web Security:
+  - Content Security Policy (CSP)
+  - CORS configuration
+  - Rate limiting
+  - Input sanitization
+  - SQL injection prevention
+  - XSS protection
+```
+
+### 3.3 Performance Requirements
+
+**Web Application Metrics:**
+- Page Load Time: <2 seconds (LCP)
+- API Response Time: <200ms (p95)
+- Time to Interactive: <3.5 seconds
+- Concurrent Users: 1,000+
+- Database Queries: <100ms
+- WebSocket Latency: <50ms
+
+**Voice Agent Metrics:**
+- Call Initiation: <2 seconds
+- Speech-to-Text: <200ms
+- Response Generation: <500ms
+- Voice Synthesis: <100ms
+- End-to-end Latency: <1.5 seconds
+
+### 3.4 Browser Requirements
+- Chrome 90+, Firefox 88+, Safari 14+, Edge 90+
+- Responsive design for tablets (iPad, Android tablets)
+- Mobile web support for quick actions
+- Progressive Web App (PWA) capabilities
+
+---
+
+## 4. USER INTERFACE SPECIFICATIONS
+
+### 4.1 Design System
+```
+Color Palette:
+- Primary: #2C5282 (Trust Blue)
+- Success: #48BB78 (Positive Green)
+- Warning: #F6AD55 (Alert Orange)
+- Danger: #FC8181 (Critical Red)
+- Neutral: #718096 (Interface Gray)
+
+Typography:
+- Headers: Inter or Roboto
+- Body: System fonts
+- Monospace: Fira Code (for data)
+
+Components:
+- Cards for patient information
+- Tables with sticky headers
+- Modal dialogs for actions
+- Toast notifications
+- Skeleton loaders
+- Responsive grid layouts
+```
+
+### 4.2 Key Pages
+
+**1. Login Page**
+- SSO integration buttons
+- MFA verification
+- Password recovery
+- Session management
+
+**2. Dashboard Home**
+- Widget-based layout
+- Customizable panels
+- Quick action buttons
+- Real-time notifications
+
+**3. Patient Management**
+- Searchable data table
+- Inline editing
+- Bulk operations
+- Export functionality
+
+**4. Voice Agent Config**
+- Form-based settings
+- Template library
+- Test call feature
+- Prompt preview
+
+**5. Analytics View**
+- Interactive charts
+- Date range picker
+- Comparison tools
+- Export reports
+
+**6. Admin Panel**
+- User management
+- System settings
+- Integration config
+- Audit logs
+
+---
+
+## 5. INTEGRATION REQUIREMENTS
+
+### 5.1 EHR Integrations
+```javascript
+// Epic FHIR Integration
+{
+  "connection_type": "FHIR R4",
+  "auth_method": "OAuth 2.0",
+  "resources": ["Patient", "Observation", "MedicationRequest"],
+  "webhooks": ["admission", "discharge", "lab_results"]
+}
+
+// Cerner Integration
+{
+  "connection_type": "SMART on FHIR",
+  "auth_method": "SMART App Launch",
+  "scopes": ["patient/*.read", "user/*.write"]
+}
+```
+
+### 5.2 Third-Party Services
+- **Twilio**: Phone number provisioning and call routing
+- **ElevenLabs**: Voice synthesis and conversation management
+- **SendGrid**: Email notifications
+- **Datadog**: Application monitoring
+- **Stripe**: Billing (if applicable)
+
+---
+
+## 6. COMPLIANCE & REGULATORY
+
+### HIPAA Requirements
+- Business Associate Agreements (BAAs)
+- Encryption standards compliance
+- Access controls and audit logs
+- Data retention policies (7 years)
+- Breach notification procedures
+- Employee training documentation
+
+### FDA Considerations
+- Software as Medical Device (SaMD) classification
+- 510(k) preparation if Class II
+- Clinical validation documentation
+- Quality Management System (QMS)
+
+---
+
+## 7. DEVELOPMENT ROADMAP
+
+### Sprint Plan (2-week sprints)
+
+**Sprints 1-4: Foundation**
+- User authentication system
+- Patient data model and CRUD
+- Basic dashboard layout
+- API gateway setup
+
+**Sprints 5-8: Voice Integration**
+- Twilio phone system setup
+- ElevenLabs integration
+- Call scheduling system
+- Basic voice analysis
+
+**Sprints 9-12: Clinical Features**
+- Biomarker analysis engine
+- Risk scoring algorithms
+- Alert system
+- Trend visualizations
+
+**Sprints 13-16: EHR Integration**
+- Epic FHIR connection
+- Data synchronization
+- Clinical documentation
+- Workflow integration
+
+**Sprints 17-20: Polish & Scale**
+- Performance optimization
+- Security hardening
+- User acceptance testing
+- Documentation
+
+---
+
+## 8. SUCCESS METRICS
+
+### Technical KPIs
+- System uptime: >99.9%
+- Page load speed: <2 seconds
+- API latency: <200ms p95
+- Error rate: <0.1%
+- Call completion: >80%
+
+### Clinical KPIs
+- Readmission reduction: >30%
+- Early detection rate: >85%
+- False positive rate: <15%
+- Patient engagement: >70%
+- Clinician satisfaction: >4/5
+
+### Business KPIs
+- User adoption: 50% in 6 months
+- Cost per patient: <$10/month
+- ROI: 10:1 from readmission prevention
+- Customer retention: >90%
+
+---
+
+## 9. DELIVERABLE FORMAT
+
+Generate a PRD with these sections:
+
+1. **Executive Summary** (1 page)
+2. **Product Vision & Strategy** (2 pages)
+3. **User Stories & Use Cases** (3 pages)
+4. **Functional Requirements** (5 pages)
+5. **Technical Architecture** (4 pages)
+6. **UI/UX Specifications** (3 pages)
+7. **API Documentation** (3 pages)
+8. **Security & Compliance** (2 pages)
+9. **Implementation Plan** (2 pages)
+10. **Success Metrics** (1 page)
+11. **Appendices** (Technical details, glossary)
+
+**Total: ~25 pages**
+
+---
+
+## 10. SPECIFIC INSTRUCTIONS FOR PRD GENERATION
+
+When generating the PRD:
+
+1. **Be Specific**: Include actual component names, libraries, and version numbers
+2. **Add Examples**: Provide sample API calls, UI mockups descriptions, and user flows
+3. **Prioritize Features**: Mark each as P0 (Critical), P1 (Important), or P2 (Nice-to-have)
+4. **Include Acceptance Criteria**: Define "done" for each feature
+5. **Add Risk Mitigation**: Address technical, clinical, and business risks
+6. **Provide Alternatives**: List backup options for critical dependencies
+7. **Define MVP**: Clearly separate MVP from future enhancements
+8. **Use Diagrams**: Describe system architecture, data flow, and user journeys
+9. **Include Testing Plans**: Unit, integration, and UAT strategies
+10. **Add Cost Estimates**: Infrastructure, licensing, and operational costs
+
+---
+
+## OUTPUT EXPECTATION
+
+Create a professional PRD that:
+- Can be shared with engineering, clinical, and business stakeholders
+- Serves as the single source of truth for development
+- Includes enough detail for accurate effort estimation
+- Provides clear success criteria
+- Enables parallel workstream planning
