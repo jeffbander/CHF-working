@@ -112,3 +112,7 @@ sentiment_cache/
 generated/
 public/uploads/
 static/uploads/
+# Embedded repositories
+audio/
+heartvoice-monitor/
+project-feature-a/
