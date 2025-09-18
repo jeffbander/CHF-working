@@ -2,13 +2,72 @@
 // Handles patient data, monitoring schedules, and clinical workflows
 
 import { Patient, CreatePatientRequest, UpdatePatientRequest, RiskLevel } from '@/types/clinical';
+import fs from 'fs';
+import path from 'path';
+
+const PATIENTS_FILE = path.join(process.cwd(), 'data', 'patients.json');
 
 export class PatientService {
+  private static instance: PatientService;
   private patients: Map<string, Patient> = new Map();
+  private initialized = false;
 
-  // Mock patients for development
-  constructor() {
+  private constructor() {
+    // Private constructor for singleton pattern
+  }
+
+  public static getInstance(): PatientService {
+    if (!PatientService.instance) {
+      PatientService.instance = new PatientService();
+    }
+    return PatientService.instance;
+  }
+
+  private async ensureInitialized() {
+    if (!this.initialized) {
+      await this.loadPatients();
+      this.initialized = true;
+    }
+  }
+
+  private async loadPatients() {
+    try {
+      // Ensure data directory exists
+      const dataDir = path.dirname(PATIENTS_FILE);
+      if (!fs.existsSync(dataDir)) {
+        fs.mkdirSync(dataDir, { recursive: true });
+      }
+
+      // Load existing patients from file
+      if (fs.existsSync(PATIENTS_FILE)) {
+        const data = fs.readFileSync(PATIENTS_FILE, 'utf8');
+        const patientsArray: Patient[] = JSON.parse(data);
+        
+        this.patients.clear();
+        patientsArray.forEach(patient => {
+          this.patients.set(patient.id, patient);
+        });
+        
+        console.log(`Loaded ${patientsArray.length} patients from storage`);
+        return;
+      }
+    } catch (error) {
+      console.error('Error loading patients from file:', error);
+    }
+
+    // If no file exists or error loading, initialize with mock data
     this.initializeMockPatients();
+    await this.savePatients();
+  }
+
+  private async savePatients() {
+    try {
+      const patientsArray = Array.from(this.patients.values());
+      fs.writeFileSync(PATIENTS_FILE, JSON.stringify(patientsArray, null, 2));
+      console.log(`Saved ${patientsArray.length} patients to storage`);
+    } catch (error) {
+      console.error('Error saving patients to file:', error);
+    }
   }
 
   private initializeMockPatients() {
@@ -165,26 +224,31 @@ export class PatientService {
   }
 
   async getAllPatients(): Promise<Patient[]> {
+    await this.ensureInitialized();
     return Array.from(this.patients.values());
   }
 
   async getPatientById(patientId: string): Promise<Patient | null> {
+    await this.ensureInitialized();
     return this.patients.get(patientId) || null;
   }
 
   async getPatientsByRiskLevel(riskLevel: RiskLevel): Promise<Patient[]> {
+    await this.ensureInitialized();
     return Array.from(this.patients.values()).filter(
       patient => patient.currentRisk.level === riskLevel
     );
   }
 
   async getHighRiskPatients(): Promise<Patient[]> {
+    await this.ensureInitialized();
     return Array.from(this.patients.values()).filter(
       patient => patient.currentRisk.level === 'critical' || patient.currentRisk.level === 'high'
     );
   }
 
   async createPatient(request: CreatePatientRequest): Promise<Patient> {
+    await this.ensureInitialized();
     const patientId = `patient-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
     
     const newPatient: Patient = {
@@ -205,10 +269,12 @@ export class PatientService {
     };
 
     this.patients.set(patientId, newPatient);
+    await this.savePatients(); // Persist to file
     return newPatient;
   }
 
   async updatePatient(request: UpdatePatientRequest): Promise<Patient | null> {
+    await this.ensureInitialized();
     const existingPatient = this.patients.get(request.patientId);
     if (!existingPatient) {
       return null;
@@ -220,6 +286,7 @@ export class PatientService {
     };
 
     this.patients.set(request.patientId, updatedPatient);
+    await this.savePatients(); // Persist to file
     return updatedPatient;
   }
 
@@ -242,10 +309,12 @@ export class PatientService {
     };
 
     this.patients.set(patientId, patient);
+    await this.savePatients(); // Persist to file
     return patient;
   }
 
   async searchPatients(query: string): Promise<Patient[]> {
+    await this.ensureInitialized();
     const lowercaseQuery = query.toLowerCase();
     
     return Array.from(this.patients.values()).filter(patient => {
@@ -312,6 +381,7 @@ export class PatientService {
 
     patient.monitoring.consentStatus = status;
     this.patients.set(patientId, patient);
+    await this.savePatients(); // Persist to file
     return patient;
   }
 
@@ -329,6 +399,7 @@ export class PatientService {
 
     patient.monitoring.consentStatus = 'withdrawn';
     this.patients.set(patientId, patient);
+    await this.savePatients(); // Persist to file
     
     // In production, would log reason and maintain audit trail
     console.log(`Patient ${patientId} deactivated. Reason: ${reason}`);

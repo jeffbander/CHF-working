@@ -1,0 +1,269 @@
+{
+  "config": {
+    "configFile": "/mnt/c/Users/jeffr/Downloads/CHF-working/heartvoice-monitor/playwright.config.ts",
+    "rootDir": "/mnt/c/Users/jeffr/Downloads/CHF-working/heartvoice-monitor/tests",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "html",
+        null
+      ],
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/mnt/c/Users/jeffr/Downloads/CHF-working/heartvoice-monitor/test-results",
+        "repeatEach": 1,
+        "retries": 1,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/mnt/c/Users/jeffr/Downloads/CHF-working/heartvoice-monitor/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/mnt/c/Users/jeffr/Downloads/CHF-working/heartvoice-monitor/test-results",
+        "repeatEach": 1,
+        "retries": 1,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "stagehand",
+        "name": "stagehand",
+        "testDir": "/mnt/c/Users/jeffr/Downloads/CHF-working/heartvoice-monitor/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/stagehand-*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/mnt/c/Users/jeffr/Downloads/CHF-working/heartvoice-monitor/test-results",
+        "repeatEach": 1,
+        "retries": 1,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headless",
+        "name": "chromium-headless",
+        "testDir": "/mnt/c/Users/jeffr/Downloads/CHF-working/heartvoice-monitor/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/mnt/c/Users/jeffr/Downloads/CHF-working/heartvoice-monitor/test-results",
+        "repeatEach": 1,
+        "retries": 1,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "voice-tests",
+        "name": "voice-tests",
+        "testDir": "/mnt/c/Users/jeffr/Downloads/CHF-working/heartvoice-monitor/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/voice-*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/mnt/c/Users/jeffr/Downloads/CHF-working/heartvoice-monitor/test-results",
+        "repeatEach": 1,
+        "retries": 1,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "firefox",
+        "name": "firefox",
+        "testDir": "/mnt/c/Users/jeffr/Downloads/CHF-working/heartvoice-monitor/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/mnt/c/Users/jeffr/Downloads/CHF-working/heartvoice-monitor/test-results",
+        "repeatEach": 1,
+        "retries": 1,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/mnt/c/Users/jeffr/Downloads/CHF-working/heartvoice-monitor/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.55.0",
+    "workers": 11,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "simple-voice-test.spec.ts",
+      "file": "simple-voice-test.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Simple Voice Call Test",
+          "file": "simple-voice-test.spec.ts",
+          "line": 8,
+          "column": 6,
+          "specs": [
+            {
+              "title": "should load application and test voice call to 6465565559",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless",
+                  "projectName": "chromium-headless",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4221,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "🌐 Testing application at: https://b545d6dd0331.ngrok.app\n"
+                        },
+                        {
+                          "text": "PAGE LOG: Failed to load resource: the server responded with a status of 400 ()\n"
+                        },
+                        {
+                          "text": "📄 Page title: ERR_NGROK_8012 - Traffic was successfully tunneled to the ngrok agent, but the agent failed to establish a connection to the upstream web service at localhost:3001.\n"
+                        },
+                        {
+                          "text": "📝 Page has content: YES\n"
+                        },
+                        {
+                          "text": "PAGE LOG: The resource https://cdn.ngrok.com/static/fonts/ibm-plex-mono/IBMPlexMono-SemiBold.woff was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.\n"
+                        },
+                        {
+                          "text": "PAGE LOG: The resource https://cdn.ngrok.com/static/fonts/euclid-square/EuclidSquare-Regular-WebS.woff was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.\n"
+                        },
+                        {
+                          "text": "PAGE LOG: The resource https://cdn.ngrok.com/static/fonts/euclid-square/EuclidSquare-MediumItalic-WebS.woff was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.\n"
+                        },
+                        {
+                          "text": "PAGE LOG: The resource https://cdn.ngrok.com/static/fonts/euclid-square/EuclidSquare-RegularItalic-WebS.woff was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.\n"
+                        },
+                        {
+                          "text": "PAGE LOG: The resource https://cdn.ngrok.com/static/fonts/euclid-square/EuclidSquare-Medium-WebS.woff was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.\n"
+                        },
+                        {
+                          "text": "PAGE LOG: The resource https://cdn.ngrok.com/static/fonts/euclid-square/EuclidSquare-Semibold-WebS.woff was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.\n"
+                        },
+                        {
+                          "text": "PAGE LOG: The resource https://cdn.ngrok.com/static/fonts/ibm-plex-mono/IBMPlexMono-SemiBoldItalic.woff was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.\n"
+                        },
+                        {
+                          "text": "PAGE LOG: The resource https://cdn.ngrok.com/static/fonts/ibm-plex-mono/IBMPlexMono-Text.woff was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.\n"
+                        },
+                        {
+                          "text": "PAGE LOG: The resource https://cdn.ngrok.com/static/fonts/ibm-plex-mono/IBMPlexMono-TextItalic.woff was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.\n"
+                        },
+                        {
+                          "text": "🔍 Element \"h1:has-text(\"Clinical Dashboard\")\": NOT FOUND\n"
+                        },
+                        {
+                          "text": "🔍 Element \"[data-testid*=\"patient\"]\": NOT FOUND\n"
+                        },
+                        {
+                          "text": "🔍 Element \"button:has-text(\"Add Patient\")\": NOT FOUND\n"
+                        },
+                        {
+                          "text": "🔍 Element \"button:has-text(\"Call\")\": NOT FOUND\n"
+                        },
+                        {
+                          "text": "🔍 Element \".patient-table\": NOT FOUND\n"
+                        },
+                        {
+                          "text": "🔍 Element \".dashboard\": NOT FOUND\n"
+                        },
+                        {
+                          "text": "⚠️ No call button found for 6465565559. Looking for add patient functionality...\n"
+                        },
+                        {
+                          "text": "✅ Test completed. Call initiated: false\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-09-16T17:27:25.396Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d47fe008b7a482a047cc-ea7c415c89dbd318639f",
+              "file": "simple-voice-test.spec.ts",
+              "line": 12,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2025-09-16T17:26:49.298Z",
+    "duration": 40184.200999999994,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

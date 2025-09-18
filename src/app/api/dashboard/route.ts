@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { PatientService } from '@/services/patient-service';
 import { PatientDashboard, ClinicalAlert } from '@/types/clinical';
 
-const patientService = new PatientService();
+const patientService = PatientService.getInstance();
 
 export async function GET(request: NextRequest) {
   try {

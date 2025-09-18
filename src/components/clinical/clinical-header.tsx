@@ -1,6 +1,6 @@
 'use client';
 
-import { Bell, User, LogOut, Menu, BookOpen, Stethoscope, Cpu, Home } from 'lucide-react';
+import { Bell, User, LogOut, Menu, BookOpen, Stethoscope, Cpu, Home, Headphones, Navigation } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import {
@@ -47,6 +47,20 @@ export function ClinicalHeader({ clinicianName, clinicianTitle, alertCount }: Cl
                 <Link href="/" className="flex items-center gap-2 cursor-pointer">
                   <Home className="h-4 w-4" />
                   Clinical Dashboard
+                </Link>
+              </DropdownMenuItem>
+              
+              <DropdownMenuItem asChild>
+                <Link href="/voice-agent" className="flex items-center gap-2 cursor-pointer">
+                  <Headphones className="h-4 w-4" />
+                  Voice Agent Control Center
+                </Link>
+              </DropdownMenuItem>
+              
+              <DropdownMenuItem asChild>
+                <Link href="/steering" className="flex items-center gap-2 cursor-pointer">
+                  <Navigation className="h-4 w-4" />
+                  Call Steering Control
                 </Link>
               </DropdownMenuItem>
               
