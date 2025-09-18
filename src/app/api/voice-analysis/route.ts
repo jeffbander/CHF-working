@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { VoiceBiomarkerExtractor } from '../../../services/voice-biomarker-extractor';
+import { ClinicalAlertService } from '../../../services/clinical-alert-service';
 
 export async function POST(req: NextRequest) {
   try {
@@ -88,6 +89,21 @@ export async function POST(req: NextRequest) {
 
     // Store analysis results (in a real app, this would go to a database)
     console.log(`💾 Storing voice analysis results for patient ${patientId}`);
+
+    // Evaluate clinical alerts based on biomarkers
+    const alertService = ClinicalAlertService.getInstance();
+    const alerts = alertService.evaluateBiomarkers(
+      patientId || 'unknown',
+      'Patient Name', // In production, get from patient database
+      callSid || 'unknown',
+      biomarkerAnalysis.biomarkers,
+      biomarkerAnalysis.riskScore
+    );
+
+    if (alerts.length > 0) {
+      console.log(`🚨 Generated ${alerts.length} clinical alerts:`,
+        alerts.map(a => `${a.alertType}: ${a.title}`));
+    }
 
     // Determine next step based on question type
     let nextTwiml;
