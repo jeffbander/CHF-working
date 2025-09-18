@@ -6,18 +6,17 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Progress } from '@/components/ui/progress';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { 
-  Activity, 
-  Heart, 
-  Mic, 
-  TrendingUp, 
-  AlertTriangle, 
+
+import {
+  Activity,
+  Heart,
+  Mic,
+  TrendingUp,
+  AlertTriangle,
   CheckCircle,
   Clock,
   Phone,
-  BarChart3,
-  Waveform
+  BarChart3
 } from 'lucide-react';
 
 interface VoiceBiomarkers {
@@ -109,7 +108,7 @@ export default function VoiceAnalysisDashboard() {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
-          <Waveform className="h-8 w-8 animate-pulse mx-auto mb-4" />
+          <Activity className="h-8 w-8 animate-pulse mx-auto mb-4" />
           <p>Loading voice analysis results...</p>
         </div>
       </div>
