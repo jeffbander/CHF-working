@@ -1,0 +1,28 @@
+{
+  "scripts": {
+    "greeting": {
+      "name": "Greeting & Symptom Collection",
+      "description": "Initial introduction and symptom assessment",
+      "script": "Good morning {patientName}! This is your friendly AI health assistant calling from HeartVoice Monitor. I hope you are having a wonderful day! I am calling to do a quick check on your heart health and see how you have been feeling. This conversation will help us monitor your wellbeing through advanced voice analysis. First, I would love to hear about any symptoms you might be experiencing. This could include things like shortness of breath, fatigue, swelling in your legs or feet, chest discomfort, or any other concerns you might have. Please take your time and after the tone, tell me about how you have been feeling over the past few days.",
+      "maxLength": 40,
+      "timeout": 5,
+      "nextPhase": "voice_analysis"
+    },
+    "voice_analysis": {
+      "name": "Voice Analysis & Counting",
+      "description": "Standardized counting exercise for voice biomarker analysis",
+      "script": "Thank you so much for sharing that information with me. Everything you told me is very helpful for your healthcare team to understand your current condition. Now, I need to do a quick voice analysis to check some important health indicators in your voice. This is a simple exercise that helps us monitor your heart health in a completely new way. I need you to count from one to ten clearly and at your normal speaking pace. This helps our advanced AI analyze your voice patterns for any changes that might indicate health concerns. After the tone, please count slowly and clearly: One, two, three, four, five, six, seven, eight, nine, ten.",
+      "maxLength": 20,
+      "timeout": 4,
+      "nextPhase": "conclusion"
+    },
+    "conclusion": {
+      "name": "Conclusion & Instructions",
+      "description": "Closing message with care instructions and next steps",
+      "script": "Excellent! Thank you so much, {patientName}. You did a wonderful job and I have successfully completed your voice health assessment for today. Your voice recordings will now be analyzed using our advanced AI technology to check for important health indicators, and all the results will be shared with your healthcare team right away. This innovative voice analysis helps us monitor your heart health in a completely new way that was never possible before. Please remember, if you experience any urgent symptoms like severe chest pain, extreme difficulty breathing, or dizziness, please do not wait - call 911 or go to the emergency room immediately. For any non-urgent questions or concerns, you can always contact your doctor's office during regular hours. We will continue to monitor your health through these voice assessments, and your healthcare team will reach out if they notice anything that needs attention. Thank you for participating in this innovative health monitoring program. Take care, stay healthy, and have a wonderful rest of your day. Goodbye!",
+      "maxLength": null,
+      "timeout": null,
+      "nextPhase": null
+    }
+  }
+}
